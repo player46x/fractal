@@ -8,23 +8,23 @@ var yOffsetSlider = document.getElementById("yOffset");
 var fpsText = document.getElementById("fps");
 var zoom = 1;
 var zoom2 = 0;
-var xOffset = 10;
+var xOffset = 0;
 var yOffset = 0;
 requestAnimationFrame(draw);
 function draw()
 {
     zoom = zoomSlider.value;
     zoom2 = zoom2Slider.value;
-    zoom *= zoom;
+    zoom = zoom * zoom * zoom;
     zoom/=2;
     zoom+=zoom2/5000;
     //console.log(zoom)
-    xOffset = xOffsetSlider.value;
-    yOffset = yOffsetSlider.value;
+    //xOffset = xOffsetSlider.value;
+    //yOffset = yOffsetSlider.value;
     zoom *= canvas.width/4;
     for (let x = 0; x < canvas.width; x++) {
         for (let y = 0; y < canvas.height; y++) {
-            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*4;
+            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*1;
             //console.log(i);
             setPixel(x,y, i,i,i);
         }
@@ -34,6 +34,27 @@ function draw()
     requestAnimFrame();
     requestAnimationFrame(draw);
 }
+
+document.onkeydown = function(e) { 
+    switch (e.key) { 
+        case "d": 
+            xOffset-=-1/(zoom/10000);
+            xOffsetSlider.value=xOffset;
+            break; 
+        case "a": 
+            xOffset-=1/(zoom/10000);
+            xOffsetSlider.value=xOffset; 
+            break; 
+        case "w": 
+            yOffset-=-1/(zoom/10000);
+            yOffsetSlider.value=yOffset; 
+            break; 
+        case "s": 
+            yOffset-=1/(zoom/10000);
+            yOffsetSlider.value=yOffset; 
+            break; 
+    } 
+}; 
 function MandelbrotFunction(xi, yi)
 {
     let y = xi/zoom;
@@ -46,7 +67,7 @@ function MandelbrotFunction(xi, yi)
 
     let z = math.complex(0, 0);
 
-    for (i = 0; i != 25; i++)
+    for (i = 0; i != 255; i++)
     {
         z = math.add(math.multiply(z,z), math.complex(x, y));
         if (math.abs(z) > 2)
