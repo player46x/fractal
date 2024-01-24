@@ -12,7 +12,7 @@ var xOffset = 0;
 var yOffset = 0;
 var zoomn = 1;
 
-requestAnimationFrame(draw);
+//requestAnimationFrame(draw);
 function draw()
 {
     //zoom = zoomSlider.value;
@@ -27,15 +27,15 @@ function draw()
     zoom *= canvas.width/4;
     for (let x = 0; x < canvas.width; x++) {
         for (let y = 0; y < canvas.height; y++) {
-            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*2.5;
+            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*1;
             //console.log(i);
             setPixel(x,y, i,i,i);
         }
     }
-    setPixel(canvas.width/2,canvas.height/2, 255,0,0);
+    //setPixel(canvas.width/2,canvas.height/2, 255,0,0);
     ctx.putImageData(imageData, 0, 0);
     requestAnimFrame();
-    requestAnimationFrame(draw);
+    //requestAnimationFrame(draw);
 }
 
 document.onkeydown = function(e) { 
@@ -78,10 +78,11 @@ function MandelbrotFunction(xi, yi)
 
     let z = math.complex(0, 0);
 
-    for (i = 0; i != 100; i++)
+    for (i = 0; i != 255; i++)
     {
-        //z = math.add(math.multiply(z,z), math.complex(x, y));
-        z = math.add(math.cos(z), math.complex(x, y))
+        z = math.add(math.multiply(z,z), math.complex(x, y)); //Mandelbrot
+        //z = math.add(math.cos(z), math.complex(x, y)) // wacky that contains mandelbrot
+        //z = math.add(math.multiply(z,math.cos(z)), math.complex(x,y)); //wacky of my own creation
         if (math.abs(z) > 10)
         {
             return i;
