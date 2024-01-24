@@ -10,10 +10,13 @@ var zoom = 1;
 var zoom2 = 0;
 var xOffset = 0;
 var yOffset = 0;
+var zoomn = 1;
+
 requestAnimationFrame(draw);
 function draw()
 {
-    zoom = zoomSlider.value;
+    //zoom = zoomSlider.value;
+    zoom = zoomn;
     zoom2 = zoom2Slider.value;
     zoom = zoom * zoom * zoom;
     zoom/=2;
@@ -24,7 +27,7 @@ function draw()
     zoom *= canvas.width/4;
     for (let x = 0; x < canvas.width; x++) {
         for (let y = 0; y < canvas.height; y++) {
-            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*1;
+            let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*2.5;
             //console.log(i);
             setPixel(x,y, i,i,i);
         }
@@ -53,6 +56,14 @@ document.onkeydown = function(e) {
             yOffset-=1/(zoom/10000);
             yOffsetSlider.value=yOffset; 
             break; 
+        case "e": 
+            zoomn+=1*(zoomn);
+            zoomSlider.value=yOffset; 
+            break; 
+        case "q": 
+            zoomn-=.5*(zoomn);
+            zoomSlider.value=yOffset; 
+            break; 
     } 
 }; 
 function MandelbrotFunction(xi, yi)
@@ -67,10 +78,11 @@ function MandelbrotFunction(xi, yi)
 
     let z = math.complex(0, 0);
 
-    for (i = 0; i != 255; i++)
+    for (i = 0; i != 100; i++)
     {
-        z = math.add(math.multiply(z,z), math.complex(x, y));
-        if (math.abs(z) > 2)
+        //z = math.add(math.multiply(z,z), math.complex(x, y));
+        z = math.add(math.cos(z), math.complex(x, y))
+        if (math.abs(z) > 10)
         {
             return i;
         }
