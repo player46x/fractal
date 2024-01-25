@@ -8,9 +8,9 @@ var yOffsetSlider = document.getElementById("yOffset");
 var fpsText = document.getElementById("fps");
 var zoom = 1;
 var zoom2 = 0;
-var xOffset = -8000;
+var xOffset = 0;
 var yOffset = 0;
-var zoomn = 1.4;
+var zoomn = 1;
 
 var xx = 0;
 
@@ -27,34 +27,34 @@ function draw()
     //xOffset = xOffsetSlider.value;
     //yOffset = yOffsetSlider.value;
     zoom *= canvas.width/4;
-    /*let xxgoal = xx+10;
+    let xxgoal = xx+50;
     for (xx = xx; xx < xxgoal; xx++) {
-        fpsText.innerText=(xx/7680)*100;
+        fpsText.innerText=(xx/15360)*100;
         //console.log((x/3840)*100);
         for (let y = 0; y < canvas.height; y++) {
-            let i = MandelbrotFunction(xx-canvas.width/2,y-canvas.height/2)*1;
-            setPixel(xx,y, i,i,i);
+            let i = MandelbrotFunction(xx-canvas.width*0,y-canvas.height/1)*1;
+            let color = HSVtoRGB(i/255,1,1)
+            setPixel(xx,y,color.r - i,color.g-i,color.b-i);
         }
     }
-    */
-    for (let x = 0; x < canvas.width; x++) {
+    
+    /*for (let x = 0; x < canvas.width; x++) {
         //console.log((x/3840)*100);
         for (let y = 0; y < canvas.height; y++) {
             let i = MandelbrotFunction(x-canvas.width/2,y-canvas.height/2)*1;
             let color = HSVtoRGB(i/255,1,1)
             setPixel(x,y,color.r - i,color.g-i,color.b-i);
         }
-    }
-    setPixel(Math.round(canvas.height/2),Math.round(canvas.height/2), 255,0,0);
+    }*/
+    //setPixel(Math.round(canvas.height/2),Math.round(canvas.height/2), 255,0,0);
     ctx.putImageData(imageData, 0, 0);
-    requestAnimationFrame(draw);
+    //requestAnimationFrame(draw);
     //requestAnimFrame();
-    /*
-    if(xxgoal<7680)
+    if(xxgoal<15360)
     {
         requestAnimationFrame(draw);
     }
-    */
+    
 }
 
 document.onkeydown = function(e) { 
@@ -87,8 +87,8 @@ document.onkeydown = function(e) {
 }; 
 function MandelbrotFunction(xi, yi)
 {
-    let y = xi/zoom;
-    let x = yi/zoom;
+    let y = xi/6000;
+    let x = yi/6000;
 
     x += xOffset/10000;
     y -= yOffset/10000;
