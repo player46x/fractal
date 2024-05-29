@@ -15,15 +15,9 @@ var zoomn = new Decimal(1.4);
 var iterations = 255;
 var res = 50;
 
-var doEase=false;
-
 function valueEase(x)
 {
-    if(doEase)
-    {
-        return x**10;
-    }
-    return x;
+    return x**10;
 }
 
 //requestAnimationFrame(draw);
@@ -147,7 +141,7 @@ function draw()
     for (let x = 0; x < res; x++) {
         for (let y = 0; y < res; y++) {
             let i = ScreenArray[x][y];
-            let color = HSVtoRGB((i%255)/50,1,1-valueEase(parseFloat(i)/parseFloat(iterations)));
+            let color = HSVtoRGB((i%255)/25,1,1-valueEase(parseFloat(i)/parseFloat(iterations)));
             setPixel(x,y,color.r,color.g,color.b);
         }
     }
@@ -282,14 +276,12 @@ function MandelbrotFunction(xi, yi)
     return iterations;
 }
 
-function setPixel(y,x, r,g,b)
-{   
-    let pixelX = x*4;
-    let pixelY = y*4;
-    imageData.data[pixelX + pixelY * canvas.width] = r;
-    imageData.data[(pixelX + pixelY * canvas.width)+1] = g;
-    imageData.data[(pixelX + pixelY * canvas.width)+2] = b;
-    imageData.data[(pixelX + pixelY * canvas.width)+3] = 255;
+function setPixel(y, x, r, g, b) {
+    let pixelIndex = (y * canvas.width + x) * 4;
+    imageData.data[pixelIndex] = r;
+    imageData.data[pixelIndex + 1] = g;
+    imageData.data[pixelIndex + 2] = b;
+    imageData.data[pixelIndex + 3] = 255;
 }
 
 var lastCalledTime;
